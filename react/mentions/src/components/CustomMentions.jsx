@@ -28,22 +28,47 @@ class CustomMentions extends React.Component {
     };
   }
 
+  customDisplay = (entry, search, highlightedDisplay, index, focused) => {
+    const json = {
+      entry,
+      search,
+      highlightedDisplay,
+      index,
+      focused
+    };
+  
+    console.log("CustomDisplay: ", json); 
+    return (
+      <div 
+        style={{
+          background: focused ? '#aaa' : 'white' 
+        }}
+        //className={`user ${focused ? 'focused' : ''}`}
+      >
+        {highlightedDisplay} {`(${focused})`}
+      </div>
+    )
+  }
+  
+
   render() {
     console.log('CustomMentions state: ', this.state);
     return (
     <>
       <MentionsInput
         value={this.state.comment}
-        className='mentions'
-        classNames={classNames}
+        //className='mentions'
+        //classNames={classNames}
         a11ySuggestionsListLabel={"Suggested mentions"}
         //className='comments-textarea'
         onChange={event => this.setState({comment: event.target.value})}
+        
       >
        <Mention
         trigger='@'
         data={users}
-        className={classNames.mentions__mention}
+        renderSuggestion={this.customDisplay}
+        //className={classNames.mentions__mention}
         markup='@@@____id__^^____display__@@@^^^'
        />
       </MentionsInput>
